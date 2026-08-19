@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f1720" />
+  <title>Cadence Workflow Studio</title>
+  <script>
+    (() => {
+      try {
+        const stored = localStorage.getItem("cadence-ui-theme");
+        const theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+      } catch (_) { document.documentElement.dataset.theme = "light"; }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">C</div>
+          <div class="brand-copy">
+            <strong>Cadence Workflow Studio</strong>
+            <span>Discovery → executable workflow</span>
+          </div>
+          <button class="sidebar-collapse" type="button" id="sidebarCollapseBtn" aria-label="جمع کردن نوار کناری" title="جمع/باز کردن نوار کناری">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+        </div>
+
+        <div class="workspace-pill">
+          <span class="workspace-dot"></span>
+          <span class="workspace-pill-copy">Factory workflow</span>
+          <span class="version-pill">v1.5.1</span>
+        </div>
+
+        <div class="project-health" id="projectHealth"></div>
+
+        <label class="sidebar-search" for="sidebarSearch">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="sidebarSearch" type="search" placeholder="جستجوی بخش‌ها…" autocomplete="off" />
+          <kbd>/</kbd>
+        </label>
+      </div>
+
+      <nav class="nav" id="mainNav" aria-label="Project sections">
+        <div class="nav-group" data-nav-group>
+          <div class="nav-group-label">شناخت و طراحی فرایند</div>
+          <button class="nav-item active" data-view="overview" data-tooltip="نمای کلی">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v4h-6zM14 12h6v8h-6zM4 14h6v6H4z"/></svg>
+            <span class="nav-label">نمای کلی</span><span class="nav-number">01</span>
+          </button>
+          <button class="nav-item" data-view="current" data-tooltip="فرایند فعلی">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h11M12 4l3 3-3 3M20 17H9m3-3-3 3 3 3"/></svg>
+            <span class="nav-label">فرایند فعلی</span><span class="nav-number">02</span>
+          </button>
+          <button class="nav-item" data-view="target" data-tooltip="فرایند پیشنهادی">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M22 12h-3M12 22v-3M2 12h3"/></svg>
+            <span class="nav-label">فرایند پیشنهادی</span><span class="nav-number">03</span>
+          </button>
+        </div>
+
+        <div class="nav-group" data-nav-group>
+          <div class="nav-group-label">معماری و برنامه‌ریزی</div>
+          <button class="nav-item" data-view="requirements" data-tooltip="نیازمندی‌ها و Roadmap">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4"/></svg>
+            <span class="nav-label">نیازمندی‌ها و Roadmap</span><span class="nav-number">04</span>
+          </button>
+          <button class="nav-item" data-view="data" data-tooltip="مدل داده و اسناد">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></svg>
+            <span class="nav-label">مدل داده و اسناد</span><span class="nav-number">05</span>
+          </button>
+          <button class="nav-item" data-view="roles" data-tooltip="نقش‌ها و دسترسی‌ها">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3.5 19c.6-3.6 2.5-5.5 5.5-5.5s4.9 1.9 5.5 5.5M16 7h5M18.5 4.5v5"/></svg>
+            <span class="nav-label">نقش‌ها و دسترسی‌ها</span><span class="nav-number">06</span>
+          </button>
+          <button class="nav-item" data-view="planning" data-tooltip="برنامه‌ریزی تولید">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16M8 14h2M14 14h2M8 17h2"/></svg>
+            <span class="nav-label">برنامه‌ریزی تولید</span><span class="nav-number">07</span>
+          </button>
+          <button class="nav-item" data-view="metrics" data-tooltip="KPI و داشبورد">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19V9M10 19V5M15 19v-7M20 19V3"/></svg>
+            <span class="nav-label">KPI و داشبورد</span><span class="nav-number">08</span>
+          </button>
+        </div>
+
+        <div class="nav-group" data-nav-group>
+          <div class="nav-group-label">همکاری و کنترل پروژه</div>
+          <button class="nav-item" data-view="questions" data-tooltip="ابهام‌ها، ریسک‌ها و تصمیم‌ها">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20a8 8 0 1 0-8-8 8 8 0 0 0 8 8zM9.7 9a2.4 2.4 0 1 1 3.7 2c-.9.6-1.4 1.1-1.4 2M12 16h.01"/></svg>
+            <span class="nav-label">ابهام‌ها، ریسک‌ها و تصمیم‌ها</span><span class="nav-number">09</span>
+          </button>
+          <button class="nav-item" data-view="miro" data-tooltip="Miro و همکاری تیمی">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 11 5M10 18l5-13M14 18l4-10"/></svg>
+            <span class="nav-label">Miro و همکاری تیمی</span><span class="nav-number">10</span>
+          </button>
+          <a class="nav-item nav-link nav-board-link" href="workflow-board.html" data-tooltip="برد بصری تعاملی">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v6H4zM13 5h7v4h-7zM13 11h7v8h-7zM4 13h7v6H4z"/></svg>
+            <span class="nav-label">برد بصری تعاملی</span><span class="nav-number">11 ↗</span>
+          </a>
+          <button class="nav-item" data-view="changelog" data-tooltip="تاریخچه تغییرات">
+            <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.7L4 8.5M4 4v4.5h4.5M12 7v5l3 2"/></svg>
+            <span class="nav-label">تاریخچه تغییرات</span><span class="nav-number">12</span>
+          </button>
+        </div>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <a class="sidebar-board-shortcut" href="workflow-board.html" title="باز کردن Visual Board">
+          <span class="board-shortcut-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h7v6H4zM13 5h7v4h-7zM13 11h7v8h-7zM4 13h7v6H4z"/></svg>
+          </span>
+          <span class="sidebar-board-copy"><strong>Visual Board</strong><small>Open collaborative canvas</small></span>
+          <span class="shortcut-arrow">↗</span>
+        </a>
+
+        <button class="sidebar-util theme-toggle" type="button" id="themeToggleBtn" aria-label="فعال کردن حالت شب" title="Night / Day mode">
+          <span class="utility-icon theme-icon">
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.2 8.2 0 0 1 8.5 4 8.3 8.3 0 1 0 20 15.5z"/></svg>
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          </span>
+          <span class="utility-label">حالت شب</span>
+          <span class="theme-switch" aria-hidden="true"><i></i></span>
+        </button>
+
+        <div class="sidebar-action-row">
+          <button class="sidebar-util compact" type="button" id="saveBtn" title="ذخیره در مرورگر">
+            <span class="utility-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h12l2 2v14H5zM8 4v6h8V4M8 20v-6h8v6"/></svg></span>
+            <span class="utility-label">ذخیره</span>
+          </button>
+          <button class="sidebar-util compact danger-soft" type="button" id="resetBtn" title="بازنشانی نسخه پایه">
+            <span class="utility-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8a8 8 0 1 1-1 7M5 8V3M5 8h5"/></svg></span>
+            <span class="utility-label">بازنشانی</span>
+          </button>
+        </div>
+
+        <div class="sidebar-meta">
+          <span class="status-dot"></span><span>Local workspace</span><span>•</span><span>Auto persistence</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-copy">
+          <div class="eyebrow">Main workflow planning workspace</div>
+          <h1 id="viewTitle">نمای کلی پروژه</h1>
+          <p id="viewSubtitle">منبع واحد برای شناخت، طراحی، تصمیم‌گیری و برنامه‌ریزی سیستم مدیریت فروش و تولید مبلمان کادنس.</p>
+        </div>
+        <div class="topbar-actions">
+          <a class="btn btn-primary" href="workflow-board.html">Visual Board ↗</a>
+          <button class="btn btn-ghost" id="focusBtn">حالت تمرکز</button>
+          <button class="btn btn-secondary" id="exportMdBtn">خروجی Markdown</button>
+          <button class="btn btn-secondary" id="exportJsonBtn">خروجی JSON</button>
+          <label class="btn btn-secondary file-label">ورود JSON<input type="file" id="importJsonInput" accept="application/json,.json" hidden></label>
+          <button class="btn btn-primary" id="openMiroBtn">باز کردن Miro</button>
+        </div>
+      </header>
+
+      <section class="workspace" id="workspace" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <dialog id="editDialog" class="dialog">
+    <form method="dialog" class="dialog-card" id="editForm">
+      <div class="dialog-head">
+        <div>
+          <div class="eyebrow">Edit workspace item</div>
+          <h2 id="editDialogTitle">ویرایش</h2>
+        </div>
+        <button type="button" class="icon-btn" id="closeDialogBtn" aria-label="Close">×</button>
+      </div>
+      <div id="editDialogBody"></div>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" id="cancelEditBtn">لغو</button>
+        <button type="submit" class="btn btn-primary">ذخیره تغییرات</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="project-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0f1720" />
+  <title>Cadence Visual Workflow Board</title>
+  <script>
+    (() => {
+      try {
+        const stored = localStorage.getItem("cadence-ui-theme");
+        const theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.dataset.theme = theme;
+      } catch (_) { document.documentElement.dataset.theme = "light"; }
+    })();
+  </script>
+  <link rel="stylesheet" href="workflow-board.css" />
+</head>
+<body>
+  <div class="board-app">
+    <header class="board-header">
+      <div class="board-brand">
+        <a class="back-link" href="index.html" aria-label="بازگشت به Workflow Studio">←</a>
+        <div>
+          <div class="eyebrow">Cadence Workflow Studio</div>
+          <h1>Visual Workflow Board</h1>
+          <p>برد تعاملی برای طراحی، مذاکره و نهایی‌سازی گردش کار کارخانه.</p>
+        </div>
+      </div>
+      <div class="board-header-actions">
+        <div class="board-health" id="boardHealth" aria-live="polite"></div>
+        <button class="board-theme-toggle" type="button" id="boardThemeToggleBtn" aria-label="فعال کردن حالت شب" title="Night / Day mode">
+          <svg class="board-theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5A8.2 8.2 0 0 1 8.5 4 8.3 8.3 0 1 0 20 15.5z"/></svg>
+          <svg class="board-theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+          <span class="board-theme-label">Night</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="command-bar" aria-label="Board controls">
+      <div class="tool-group mode-tools" role="group" aria-label="Interaction mode">
+        <button class="tool-btn active" type="button" data-mode="select" title="انتخاب و جابه‌جایی (V)">↖ <span>انتخاب</span></button>
+        <button class="tool-btn" type="button" data-mode="marquee" title="Selection Rectangle (M) — یا در حالت Select کلید Shift را نگه دارید">▱ <span>Marquee</span></button>
+        <button class="tool-btn" type="button" data-mode="pan" title="حرکت روی بوم (H) — در حالت انتخاب هم می‌توانید فضای خالی را Drag کنید">✋ <span>دست</span></button>
+        <button class="tool-btn" type="button" data-mode="connect" title="اتصال دو کارت (C)">⤴ <span>اتصال</span></button>
+      </div>
+
+      <div class="tool-group">
+        <button class="tool-btn" type="button" id="addStageBtn">＋ <span>مرحله</span></button>
+        <button class="tool-btn" type="button" id="addNoteBtn">▰ <span>یادداشت</span></button>
+        <button class="tool-btn" type="button" id="addLaneBtn">☰ <span>Lane</span></button>
+      </div>
+
+      <div class="tool-group">
+        <button class="tool-btn" type="button" id="undoBtn" title="Undo">↶</button>
+        <button class="tool-btn" type="button" id="redoBtn" title="Redo">↷</button>
+        <button class="tool-btn" type="button" id="autoLayoutBtn">⌘ <span>چیدمان خودکار</span></button>
+        <button class="tool-btn" type="button" id="syncBtn">⟳ <span>Sync Target</span></button>
+      </div>
+
+      <div class="tool-group zoom-tools">
+        <button class="tool-btn" type="button" id="zoomOutBtn" aria-label="Zoom out">−</button>
+        <output id="zoomLabel" class="zoom-label">100%</output>
+        <button class="tool-btn" type="button" id="zoomInBtn" aria-label="Zoom in">＋</button>
+        <button class="tool-btn" type="button" id="fitBtn">⊙ <span>Fit</span></button>
+      </div>
+
+      <div class="search-group">
+        <label class="visually-hidden" for="boardSearch">جستجوی برد</label>
+        <input id="boardSearch" type="search" placeholder="جستجو در مرحله، مسئول، توضیح…" autocomplete="off" />
+        <label class="visually-hidden" for="statusFilter">فیلتر وضعیت</label>
+        <select id="statusFilter">
+          <option value="all">همه وضعیت‌ها</option>
+          <option value="confirmed">تأییدشده</option>
+          <option value="proposed">پیشنهادی</option>
+          <option value="needs-decision">نیازمند تصمیم</option>
+          <option value="blocked">مسدود</option>
+        </select>
+      </div>
+
+      <div class="tool-group export-tools">
+        <button class="tool-btn" type="button" id="exportBoardBtn">⇩ <span>JSON</span></button>
+        <button class="tool-btn" type="button" id="exportMiroBtn">⇩ <span>Miro CSV</span></button>
+        <button class="tool-btn" type="button" id="exportSvgBtn">⇩ <span>SVG</span></button>
+        <label class="tool-btn file-tool">⇧ <span>Import</span><input id="importBoardInput" type="file" accept="application/json,.json" hidden /></label>
+      </div>
+    </section>
+
+    <div class="board-layout">
+      <aside class="quick-panel" aria-label="Board legend and utilities">
+        <section class="panel-section">
+          <div class="panel-kicker">Workshop legend</div>
+          <div class="legend-list">
+            <div><span class="legend-dot confirmed"></span><span>تأییدشده</span></div>
+            <div><span class="legend-dot proposed"></span><span>پیشنهادی</span></div>
+            <div><span class="legend-dot needs-decision"></span><span>نیازمند تصمیم</span></div>
+            <div><span class="legend-dot blocked"></span><span>مسدود</span></div>
+          </div>
+        </section>
+
+        <section class="panel-section">
+          <div class="panel-kicker">Board layers</div>
+          <label class="switch-row"><input type="checkbox" id="toggleEdges" checked /><span>اتصالات</span></label>
+          <label class="switch-row"><input type="checkbox" id="toggleGrid" checked /><span>شبکه</span></label>
+          <label class="switch-row"><input type="checkbox" id="toggleSnap" checked /><span>Snap to grid</span></label>
+          <label class="switch-row"><input type="checkbox" id="toggleMinimap" checked /><span>Mini map</span></label>
+        </section>
+
+        <section class="panel-section">
+          <div class="panel-kicker">Selection</div>
+          <div class="selection-actions selection-actions-3">
+            <button type="button" class="small-btn" id="duplicateBtn" disabled>Duplicate</button>
+            <button type="button" class="small-btn" id="groupBtn" disabled>Group</button>
+            <button type="button" class="small-btn danger" id="deleteBtn" disabled>Delete</button>
+          </div>
+          <p class="helper">فضای خالی را Drag کنید تا Pan شود. برای Selection Rectangle، Shift + Drag کنید یا ابزار Marquee را بزنید. Shift/Ctrl + Click برای Multi-select است. Ctrl/Cmd + G کارت‌های انتخاب‌شده را Group می‌کند. راست‌کلیک برای افزودن و Double-click برای Edit Drawer.</p>
+        </section>
+
+        <section class="panel-section source-note">
+          <div class="panel-kicker">Source discipline</div>
+          <p>ساختار پایه از Discovery PDF و Target Workflow پروژه آمده است. کارت‌های پیشنهادی یا تصمیم‌نشده باید تا Workshop با برچسب مناسب باقی بمانند.</p>
+        </section>
+      </aside>
+
+      <main class="canvas-shell">
+        <div class="canvas-status" id="canvasStatus">Select mode · تغییرات خودکار ذخیره می‌شوند</div>
+        <div class="board-viewport grid-on" id="boardViewport" aria-label="Interactive workflow canvas">
+          <div class="board-world" id="boardWorld">
+            <div class="lane-layer" id="laneLayer"></div>
+            <div class="group-layer" id="groupLayer"></div>
+            <svg class="edge-layer" id="edgeLayer" aria-hidden="true"></svg>
+            <div class="node-layer" id="nodeLayer"></div>
+          </div>
+          <div class="selection-marquee" id="selectionMarquee" hidden aria-hidden="true"></div>
+          <div class="connect-hint" id="connectHint" hidden></div>
+          <div class="minimap" id="minimap" aria-label="Mini map"></div>
+          <div class="empty-search" id="emptySearch" hidden>نتیجه‌ای مطابق فیلتر پیدا نشد.</div>
+        </div>
+        <div class="floating-actions" id="floatingActions" hidden aria-label="Quick actions"></div>
+      </main>
+
+      <aside class="inspector" id="inspector" aria-label="Selection inspector">
+        <div class="inspector-head">
+          <div>
+            <div class="panel-kicker">Inspector</div>
+            <h2 id="inspectorTitle">جزئیات برد</h2>
+          </div>
+          <span class="save-state" id="saveState">Saved</span>
+        </div>
+        <div id="inspectorBody"></div>
+      </aside>
+    </div>
+  </div>
+
+
+  <div class="drawer-backdrop" id="editDrawerBackdrop" hidden></div>
+  <aside class="edit-drawer" id="editDrawer" hidden aria-hidden="true" aria-label="Edit workflow item">
+    <div class="edit-drawer-head">
+      <div>
+        <div class="panel-kicker">Focused editor</div>
+        <h2 id="editDrawerTitle">Edit</h2>
+      </div>
+      <button type="button" class="drawer-close" id="closeEditDrawerBtn" aria-label="Close editor">×</button>
+    </div>
+    <div class="edit-drawer-body" id="editDrawerBody"></div>
+    <div class="edit-drawer-actions">
+      <button type="button" class="drawer-btn" id="cancelEditDrawerBtn">Cancel</button>
+      <button type="button" class="drawer-btn primary" id="saveEditDrawerBtn">Save changes</button>
+    </div>
+  </aside>
+
+  <dialog class="group-dialog" id="groupDialog">
+    <form id="groupDialogForm" class="group-dialog-card">
+      <div class="group-dialog-head">
+        <div>
+          <div class="panel-kicker">Organize selection</div>
+          <h2>Create workflow group</h2>
+          <p>کارت‌های انتخاب‌شده به یک Group بصری و قابل جابه‌جایی تبدیل می‌شوند.</p>
+        </div>
+      </div>
+      <label class="group-dialog-field">Group name<input id="groupNameInput" required></label>
+      <label class="group-dialog-field">Color theme
+        <select id="groupThemeInput">
+          <option value="mint">Mint</option><option value="sky">Sky</option><option value="sand">Sand</option><option value="rose">Rose</option><option value="violet" selected>Violet</option><option value="slate">Slate</option>
+        </select>
+      </label>
+      <div class="group-dialog-actions">
+        <button type="button" class="drawer-btn" id="cancelGroupDialogBtn">Cancel</button>
+        <button type="submit" class="drawer-btn primary">Create group</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="board-context-menu" id="boardContextMenu" hidden role="menu" aria-label="Board context menu">
+    <div class="context-menu-head">
+      <span>افزودن در این نقطه</span>
+      <small id="contextCoords">Canvas</small>
+    </div>
+    <button type="button" role="menuitem" data-context-action="stage"><span class="context-icon">＋</span><span><strong>مرحله جدید</strong><small>Workflow stage</small></span></button>
+    <button type="button" role="menuitem" data-context-action="gate"><span class="context-icon">◇</span><span><strong>Decision / Gate</strong><small>نقطه تصمیم یا تأیید</small></span></button>
+    <button type="button" role="menuitem" data-context-action="parallel"><span class="context-icon">∥</span><span><strong>Parallel step</strong><small>مرحله موازی پیشنهادی</small></span></button>
+    <button type="button" role="menuitem" data-context-action="note"><span class="context-icon">▰</span><span><strong>یادداشت Workshop</strong><small>فرض، سؤال یا کامنت</small></span></button>
+    <div class="context-separator"></div>
+    <button type="button" role="menuitem" data-context-action="lane"><span class="context-icon">☰</span><span><strong>Section / Lane جدید</strong><small>بخش قابل ویرایش در Workflow</small></span></button>
+  </div>
+
+  <div class="board-toast" id="boardToast" role="status" aria-live="polite"></div>
+
+  <script src="project-data.js"></script>
+  <script src="workflow-board.js"></script>
+</body>
+</html>

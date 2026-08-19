@@ -1,0 +1,192 @@
+﻿"Frame","Type","Title","Body","Priority","Status","Owner","Source"
+"01 — Project North Star","context","Problem","فرآیند فعلی به‌شدت Person-Centric و Human-Driven است: سفارش از پیام‌رسان وارد می‌شود، دوباره در Excel ثبت می‌شود، بیجک کاغذی صادر می‌شود و وضعیت تولید با تماس و پیام پیگیری می‌شود. نتیجه، دوباره‌کاری، نبود منبع واحد حقیقت، گلوگاه‌های نامرئی و وابستگی زیاد به مسئول سفارشات است.","High","Review","Product/BA","Discovery"
+"01 — Project North Star","context","North Star","یک Workflow Engine داخلی که وضعیت واقعی هر سفارش را در سطح مرحله و تعداد، همراه با پارچه، برنامه تولید، بیجک، کنترل کیفیت و خروج ثبت کند و برای مدیر و مسئول سفارشات دید لحظه‌ای بسازد.","High","Review","Team","Discovery"
+"02 — Current State","stage","ثبت سفارش در فروشگاه","Owner: کارشناس فروش / نمایندگی
+Pain: اطلاعات ساخت‌یافته و یکپارچه نیست","","As-Is","کارشناس فروش / نمایندگی","PDF p.8,10"
+"02 — Current State","stage","ایجاد فرم تولید","Owner: فروشنده
+Pain: ورود دستی و احتمال خطا","","As-Is","فروشنده","PDF p.8"
+"02 — Current State","stage","ارسال به مسئول سفارشات","Owner: فروشنده
+Pain: ورودی از کانال غیرساخت‌یافته","","As-Is","فروشنده","PDF p.8,11"
+"02 — Current State","stage","ثبت در Excel","Owner: مسئول سفارشات
+Pain: بزرگترین نقطه ورود مجدد داده","","As-Is","مسئول سفارشات","PDF p.8,9"
+"02 — Current State","stage","صدور بیجک تولید","Owner: مسئول سفارشات
+Pain: کار دستی و تکرار اطلاعات","","As-Is","مسئول سفارشات","PDF p.8,10"
+"02 — Current State","stage","برنامه‌ریزی هفتگی","Owner: مسئول سفارشات / مدیر تولید
+Pain: هماهنگی ظرفیت واحدها دشوار است","","As-Is","مسئول سفارشات / مدیر تولید","PDF p.8,10"
+"02 — Current State","stage","اجرای تولید","Owner: نجاری، زیرکار، برش و خیاطی، رویه‌کوبی
+Pain: واحدها همگام نیستند و WIP دیده نمی‌شود","","As-Is","نجاری، زیرکار، برش و خیاطی، رویه‌کوبی","PDF p.8,11,12"
+"02 — Current State","stage","کنترل کیفیت","Owner: واحد کنترل کیفیت
+Pain: مسیر Rework و ثبت نتیجه نیازمند تعریف است","","As-Is","واحد کنترل کیفیت","PDF p.8,10,12"
+"02 — Current State","stage","صدور برگه خروج","Owner: مسئول تحویل
+Pain: ارتباط با سیستم مالی نامشخص است","","As-Is","مسئول تحویل","PDF p.9"
+"02 — Current State","stage","تحویل و ارسال","Owner: مسئول تحویل / ارسال
+Pain: زمان و وضعیت تحویل در منبع واحد ثبت نمی‌شود","","As-Is","مسئول تحویل / ارسال","PDF p.9,10"
+"03 — Future State","stage","ثبت دیجیتال سفارش","Lane: Order & Approval
+DoD: Order + Order Items کامل و دارای تاریخ تحویل مورد انتظار","High","Proposed","فروش / مسئول سفارشات","Workflow Studio"
+"03 — Future State","stage","اعتبارسنجی کارخانه","Lane: Order & Approval
+DoD: مدل، تعداد، پارچه، فایل‌ها و داده‌های لازم بررسی شده","High","Proposed","مسئول سفارشات","Workflow Studio"
+"03 — Future State","stage","تأیید سفارش","Lane: Order & Approval
+DoD: Approval event ثبت شده","High","Proposed","فروشنده / نقش تأییدکننده","Workflow Studio"
+"03 — Future State","stage","صدور خودکار بیجک","Lane: Order & Approval
+DoD: Work Order یکتا برای Scope تعیین‌شده ساخته شده","High","Proposed","سیستم","Workflow Studio"
+"03 — Future State","stage","محاسبه متراژ پارچه","Lane: Fabric Track — parallel candidate
+DoD: Fabric Requirement بر اساس مدل × تعداد ثبت شده","Medium","Proposed","سیستم / مسئول سفارشات","Workflow Studio"
+"03 — Future State","stage","خرید / رزرو پارچه","Lane: Fabric Track — parallel candidate
+DoD: وضعیت خرید و مقدار تأمین ثبت شده","Medium","Proposed","مسئول خرید / انبار","Workflow Studio"
+"03 — Future State","stage","دریافت پارچه","Lane: Fabric Track — parallel candidate
+DoD: مقدار دریافت‌شده و تاریخ ثبت شده","Medium","Proposed","انبار / مسئول سفارشات","Workflow Studio"
+"03 — Future State","stage","برش و خیاطی","Lane: Fabric Track — parallel candidate
+DoD: تعداد/مقدار آماده برای مونتاژ ثبت شده","Medium","Proposed","سرپرست برش و خیاطی","Workflow Studio"
+"03 — Future State","stage","برنامه‌ریزی و Release","Lane: Production Track
+DoD: اولویت، هفته برنامه و ظرفیت موردنیاز مشخص شده","High","Proposed","مسئول سفارشات / مدیر تولید","Workflow Studio"
+"03 — Future State","stage","نجاری","Lane: Production Track
+DoD: Completed Qty و زمان پایان ثبت شده","Medium","Proposed","سرپرست نجاری","Workflow Studio"
+"03 — Future State","stage","زیرکار","Lane: Production Track
+DoD: Completed Qty و زمان پایان ثبت شده","Medium","Proposed","سرپرست زیرکار","Workflow Studio"
+"03 — Future State","stage","رویه‌کوبی و مونتاژ","Lane: Production Track
+DoD: نیازمندی‌های زیرکار + پارچه آماده و Completed Qty ثبت شده","High","Proposed","سرپرست رویه‌کوبی","Workflow Studio"
+"03 — Future State","stage","کنترل کیفیت","Lane: Production Track
+DoD: Pass / Rework / Reject برای هر آیتم یا تعداد ثبت شده","High","Proposed","کنترل کیفیت","Workflow Studio"
+"03 — Future State","stage","آماده تحویل","Lane: Production Track
+DoD: کل Scope قابل خروج است","Medium","Proposed","مسئول سفارشات / تحویل","Workflow Studio"
+"03 — Future State","stage","خروج و تحویل","Lane: Production Track
+DoD: Dispatch Slip + تاریخ + گیرنده ثبت شده","High","Proposed","مسئول تحویل","Workflow Studio"
+"04 — Open Questions","question","هر مدل مبلمان دقیقاً از چه اجزایی تشکیل می‌شود و Routing هر جزء چیست؟","","High","Open","تولید","PDF p.3"
+"04 — Open Questions","question","فرمول متراژ پارچه برای هر مدل/جزء چیست؟ ثابت، نسخه‌پذیر یا قابل Override؟","","High","Open","مسئول سفارشات","PDF p.3,20"
+"04 — Open Questions","question","آیا یک سفارش می‌تواند چند مدل و چند نوع پارچه داشته باشد؟","","High","Open","فروش/سفارشات","PDF p.3,16"
+"04 — Open Questions","question","بیجک برای کل سفارش صادر می‌شود، برای هر Order Item یا برای هر جزء تولیدی؟","","High","Open","مسئول سفارشات","PDF p.5,9,16"
+"04 — Open Questions","question","آیا بیجک شماره یکتا دارد و آیا هر واحد آن را امضا/تأیید می‌کند؟","","High","Open","کارخانه","PDF p.9"
+"04 — Open Questions","question","چه کسی وضعیت هر مرحله را ثبت می‌کند: سرپرست، اپراتور یا مسئول سفارشات؟","","High","Open","مدیر تولید","PDF p.5,10"
+"04 — Open Questions","question","آیا نجاری و مسیر پارچه/خیاطی می‌توانند به‌صورت موازی اجرا شوند؟","","High","Open","مدیر تولید","PDF p.9,18"
+"04 — Open Questions","question","آیا هر Stage می‌تواند بخشی از تعداد سفارش را تکمیل و تحویل Stage بعد دهد؟","","High","Open","مدیر تولید","PDF p.12,18"
+"04 — Open Questions","question","اگر QC رد کند، سفارش/تعداد به کدام Stage برمی‌گردد و چه کسی تأیید رفع می‌کند؟","","High","Open","QC/مدیر تولید","PDF p.12"
+"04 — Open Questions","question","برنامه تولید دقیقاً روزانه، هفتگی یا Rolling است و ظرفیت هر واحد چگونه تعریف می‌شود؟","","High","Open","مسئول سفارشات/تولید","PDF p.5,20"
+"04 — Open Questions","question","اولویت سفارش‌ها بر چه اساسی تعیین می‌شود و آیا حین تولید قابل تغییر است؟","","High","Open","مدیر کارخانه","PDF p.5,20"
+"04 — Open Questions","question","تاریخ تحویل دستی است یا باید از ظرفیت و WIP پیشنهاد شود؟","","Medium","Open","مدیریت","PDF p.20"
+"04 — Open Questions","question","آیا پارچه باید قبل از برنامه‌ریزی/نجاری رسیده باشد یا فقط قبل از Merge نهایی؟","","High","Open","تولید/خرید","PDF p.9,18"
+"04 — Open Questions","question","آیا اپراتورها وارد سیستم می‌شوند یا فقط سرپرست هر واحد؟","","Medium","Open","مدیریت","PDF p.10,15"
+"04 — Open Questions","question","چه کسی مجاز به ویرایش سفارش پس از تأیید و Release است؟","","High","Open","مدیریت","PDF p.15"
+"04 — Open Questions","question","تصویر/فایل به سطح سفارش متصل است یا Order Item؟","","Medium","Open","فروش/سفارشات","PDF p.16"
+"04 — Open Questions","question","برگه خروج و خروجی فاکتور دقیقاً باید با کدام نرم‌افزار مالی و چه فرمتی تبادل شود؟","","Medium","Open","حسابداری/Tech","PDF p.3,9"
+"04 — Open Questions","question","Baseline واقعی زمان ثبت سفارش، صدور بیجک، تعداد تماس‌ها و Lead Time چقدر است؟","","High","Open","BA/مدیریت","PDF p.22-24"
+"04 — Open Questions","question","اگر فقط 3 قابلیت در Release اول بماند، اولویت نهایی کارفرما چیست؟","","High","Open","مدیر کارخانه","PDF p.20"
+"04 — Open Questions","question","معیار رسمی پذیرش و موفقیت پروژه بعد از 30/60/90 روز چیست؟","","High","Open","مدیر کارخانه","PDF p.24"
+"05 — MVP / V1 / V2","requirement","ثبت دیجیتال سفارش تولید","حذف فرم کاغذی و ورود مجدد
+Acceptance: Order با چند Order Item، مدل، تعداد، پارچه، تاریخ مورد انتظار، فایل و توضیح ثبت شود.","High","MVP · Ready for definition","Product/BA","PDF p.18-21"
+"05 — MVP / V1 / V2","requirement","صدور خودکار بیجک","حذف کار دستی مسئول سفارشات
+Acceptance: پس از تأیید سفارش، Work Order با شماره یکتا و اطلاعات تولید ساخته و چاپ/دانلود شود.","High","MVP · Blocked by question","Product/BA","PDF p.19-21"
+"05 — MVP / V1 / V2","requirement","گردش تأیید سفارش","کاهش خطا و دوباره‌کاری
+Acceptance: درخواست تأیید، زمان، کاربر، نتیجه و کامنت در Audit Log ثبت شود.","High","MVP · Ready for definition","Product/BA","PDF p.19-21"
+"05 — MVP / V1 / V2","requirement","رهگیری وضعیت تولید در سطح مرحله و تعداد","کاهش تماس و ایجاد دید WIP
+Acceptance: برای هر Stage مقدار برنامه، انجام‌شده، مردود/برگشتی، شروع و پایان ثبت شود.","High","MVP · Ready for definition","Production","PDF p.12,19-21"
+"05 — MVP / V1 / V2","requirement","مدیریت وضعیت پارچه","پارچه یکی از دو موضوع اصلی پیگیری روزانه است
+Acceptance: خرید، دریافت، برش، خیاطی با مقدار، تاریخ و مسئول ثبت شود.","High","MVP · Ready for definition","Order/Fabric","PDF p.13,17,19"
+"05 — MVP / V1 / V2","requirement","داشبورد عملیاتی سفارش‌ها","دید لحظه‌ای مسئول سفارشات
+Acceptance: جدید، منتظر پارچه، در نجاری، در خیاطی، آماده تحویل، معوق و گلوگاه نمایش داده شود.","High","MVP · Ready for definition","Product","PDF p.22"
+"05 — MVP / V1 / V2","requirement","جستجوی وضعیت سفارش","کاهش Status Inquiry Overload
+Acceptance: با شماره سفارش، مرحله فعلی، وضعیت هر واحد، ETA و Blocker نمایش داده شود.","High","MVP · Ready for definition","Product","PDF p.13-14"
+"05 — MVP / V1 / V2","requirement","Audit/Event Log","حل مشکل نبود ثبت رویداد تولید
+Acceptance: تمام تغییرهای وضعیت و مقدار، user/time/from/to/comment/attachment را ثبت کنند.","High","MVP · Enhanced","Tech","PDF p.13,18"
+"05 — MVP / V1 / V2","requirement","برنامه هفتگی تولید","هماهنگ‌کردن واحدها و جلوگیری از عدم توازن
+Acceptance: سفارش‌ها بر اساس اولویت/ظرفیت در هفته و واحدها برنامه‌ریزی شوند.","High","V1 · Blocked by question","Planning","PDF p.19-20,23"
+"05 — MVP / V1 / V2","requirement","پیش‌بینی زمان آماده شدن","کاهش پیگیری زمان تحویل
+Acceptance: ETA از ظرفیت، WIP، وابستگی پارچه و زمان‌های استاندارد محاسبه یا پیشنهاد شود.","Medium","V1 · Needs model","Planning","PDF p.19-20"
+"05 — MVP / V1 / V2","requirement","اعلان‌های داخلی / تلگرام","جایگزینی بخشی از هماهنگی پیام‌رسانی
+Acceptance: رویدادهای مهم به نقش بعدی و مسئول سفارشات اعلان شوند.","Medium","V1 · Needs channel decision","Tech","PDF p.11,20"
+"05 — MVP / V1 / V2","requirement","کنترل گلوگاه و سفارش متوقف‌شده","Lack of Synchronization
+Acceptance: Stageهایی با توقف بیش از آستانه یا کمبود ورودی شناسایی و برجسته شوند.","High","V1 · Enhanced","Production","PDF p.11-12"
+"05 — MVP / V1 / V2","requirement","گزارش‌های پیشرفته تولید","تحلیل روند، ظرفیت و بهره‌وری
+Acceptance: Lead time، throughput، WIP، delayed orders و stage cycle time گزارش شوند.","Medium","V2 · Backlog","Management","PDF p.19-20,22"
+"05 — MVP / V1 / V2","requirement","موجودی مواد و پارچه","یکپارچه‌سازی تأمین و برنامه‌ریزی
+Acceptance: موجودی قابل تخصیص، رزرو، دریافت و مصرف قابل رهگیری باشد.","Medium","V2 · Backlog","Inventory","PDF p.20"
+"05 — MVP / V1 / V2","requirement","اتصال نرم‌افزار مالی","استفاده از خروجی فاکتور/فرم در سیستم مالی
+Acceptance: فرمت تبادل و نقاط Integration بعد از شناخت نرم‌افزار مالی تعریف شود.","Medium","V2 · Backlog","Finance/Tech","PDF p.3,20"
+"05 — MVP / V1 / V2","requirement","Role-based access + audit","تفکیک دسترسی تیم‌ها و حفظ صحت داده
+Acceptance: هر نقش فقط سفارش/مرحله مجاز را ببیند یا تغییر دهد؛ عملیات حساس log شود.","High","MVP · Enhanced","Tech","PDF p.14-15"
+"05 — MVP / V1 / V2","requirement","مدیریت Rework پس از QC","مسیر رد QC در سند مشخص نشده
+Acceptance: QC بتواند نوع مشکل، تعداد، مرحله بازگشت و تأیید رفع را ثبت کند.","High","MVP · Blocked by question","QC/Production","PDF p.12"
+"06 — Data Model","entity","Order","هدر سفارش تولید
+order_no | source/store | order_date | expected_delivery | priority | status | notes","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","OrderItem","آیتم تولیدی مستقل داخل سفارش
+order_id | product_model_id | component | qty | fabric_spec_id | image/file | item_notes","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","ProductModel","مدل استاندارد مبل
+code | name | active | default_components | fabric_formula_version","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","ProductComponent","سه‌نفره/دو‌نفره/تک‌نفره/میز و ...
+product_model_id | component_type | standard_fabric_meter | routing","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","FabricSpec","مشخصات پارچه سفارش
+code/name | color | supplier | lot | status","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","FabricRequirement","نیاز محاسبه‌شده و وضعیت تأمین
+order_item_id | required_meter | reserved_meter | received_meter | cut_meter | status","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","WorkOrder / Bijak","سند داخلی تولید
+work_order_no | scope(order/item) | issued_at | approved_at | print_version","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","StageRun","رهگیری مرحله‌ای و تعدادی
+work_order_id | stage | planned_qty | completed_qty | rework_qty | started_at | completed_at | owner","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","ProductionPlan","برنامه هفتگی و اولویت
+week | work_order_id | stage | planned_qty | planned_date | sequence | capacity_bucket","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","QCInspection","نتیجه کنترل کیفیت
+order_item_id | qty | result | defect | return_stage | inspector | timestamp","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","DispatchSlip","برگه خروج
+dispatch_no | order_id | qty | approved_by | dispatched_at | receiver","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","Approval","گردش تأیید
+entity_id | step | requested_to | decision | comment | timestamp","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","Attachment","تصویر/فایل/سند
+entity_type | entity_id | file_name | type | uploaded_by | timestamp","","Proposed","Tech/Product","Workflow Studio"
+"06 — Data Model","entity","AuditEvent","منبع قابل حسابرسی رویدادها
+entity | action | from | to | qty | user | timestamp | comment","","Proposed","Tech/Product","Workflow Studio"
+"07 — Roles & RACI","role","مدیر کارخانه","View: همه سفارش‌ها، برنامه، KPI، ظرفیت، گلوگاه
+Actions: مشاهده همه، تأیید سیاست‌ها، گزارش","","Proposed","مدیر کارخانه","Discovery + enhancement"
+"07 — Roles & RACI","role","مسئول سفارشات","View: همه سفارش‌های تولیدی، پارچه، برنامه، وضعیت
+Actions: ثبت/ویرایش سفارش، برنامه‌ریزی، صدور بیجک، اولویت‌بندی","","Proposed","مسئول سفارشات","Discovery + enhancement"
+"07 — Roles & RACI","role","مدیر تولید","View: برنامه تولید، WIP، ظرفیت و همه Stageها
+Actions: تأیید/تنظیم برنامه، حل Blocker، مشاهده عملکرد","","Proposed","مدیر تولید","Discovery + enhancement"
+"07 — Roles & RACI","role","سرپرست نجاری","View: Work Orderهای نجاری و اطلاعات لازم
+Actions: شروع/پایان، ثبت مقدار انجام‌شده، Blocker","","Proposed","سرپرست نجاری","Discovery + enhancement"
+"07 — Roles & RACI","role","سرپرست زیرکار","View: Work Orderهای زیرکار
+Actions: شروع/پایان، مقدار انجام‌شده، Blocker","","Proposed","سرپرست زیرکار","Discovery + enhancement"
+"07 — Roles & RACI","role","سرپرست برش و خیاطی","View: نیاز پارچه و سفارش‌های خیاطی
+Actions: ثبت برش/خیاطی و مقدار آماده","","Proposed","سرپرست برش و خیاطی","Discovery + enhancement"
+"07 — Roles & RACI","role","سرپرست رویه‌کوبی","View: سفارش‌های آماده Merge
+Actions: شروع/پایان، مقدار مونتاژ","","Proposed","سرپرست رویه‌کوبی","Discovery + enhancement"
+"07 — Roles & RACI","role","کنترل کیفیت","View: محصولات آماده QC + سابقه Stage
+Actions: Pass/Rework/Reject، Defect note","","Proposed","کنترل کیفیت","Discovery + enhancement"
+"07 — Roles & RACI","role","مسئول تحویل","View: آماده تحویل، QC Pass، مقصد
+Actions: ثبت خروج، صدور برگه، زمان تحویل","","Proposed","مسئول تحویل","Discovery + enhancement"
+"07 — Roles & RACI","role","انبار / مسئول پارچه","View: نیاز پارچه و دریافت‌ها
+Actions: ثبت دریافت/رزرو/مقدار","","Proposed","انبار / مسئول پارچه","Discovery + enhancement"
+"08 — KPIs & Success","kpi","زمان ثبت سفارش","Baseline: ≈ 15 دقیقه (مثال سند؛ نیازمند اندازه‌گیری)
+Target: < 5 دقیقه
+Formula: submitted_at - started_at","","Define baseline","مسئول سفارشات","PDF p.22"
+"08 — KPIs & Success","kpi","زمان صدور بیجک","Baseline: دستی
+Target: خودکار / چند ثانیه
+Formula: work_order_issued_at - approval_at","","Define baseline","سیستم","PDF p.22"
+"08 — KPIs & Success","kpi","تعداد ورود مجدد اطلاعات","Baseline: چند بار
+Target: 1 بار
+Formula: manual_reentry_count per order","","Define baseline","Product","PDF p.22"
+"08 — KPIs & Success","kpi","تماس‌های پیگیری وضعیت","Baseline: بالا
+Target: حداقل 50% کاهش
+Formula: status_inquiry_count / week","","Define baseline","مسئول سفارشات","PDF p.22-23"
+"08 — KPIs & Success","kpi","زمان یافتن وضعیت سفارش","Baseline: چند دقیقه
+Target: چند ثانیه
+Formula: status_lookup_duration","","Define baseline","Product","PDF p.23"
+"08 — KPIs & Success","kpi","افق برنامه‌ریزی قابل مشاهده","Baseline: ندارد
+Target: 2 هفته آینده
+Formula: future_plan_coverage_days","","Define baseline","Planning","PDF p.23"
+"08 — KPIs & Success","kpi","Stage Cycle Time","Baseline: ثبت نمی‌شود
+Target: Baseline پس از 4 هفته
+Formula: stage_completed_at - stage_started_at","","Define baseline","Production","Enhanced from event logging"
+"08 — KPIs & Success","kpi","WIP Age / توقف","Baseline: نامشخص
+Target: هشدار بر اساس SLA هر Stage
+Formula: now - last_progress_event","","Define baseline","Production","Enhanced from bottleneck requirement"
+"08 — KPIs & Success","kpi","On-time readiness","Baseline: نامشخص
+Target: پس از baseline تعیین شود
+Formula: ready_at <= promised_ready_at","","Define baseline","Management","Enhanced from delivery objective"
+"08 — KPIs & Success","kpi","Rework Rate","Baseline: نامشخص
+Target: پس از ثبت QC تعیین شود
+Formula: rework_qty / inspected_qty","","Define baseline","QC","Enhanced from QC ambiguity"
+"09 — Risks & Decisions","risk","دیجیتال‌سازی فرم‌ها بدون تغییر رفتار Workflow","Mitigation: طراحی State Machine و Event Log قبل از UI فرم‌ها","High","High","Product","Workflow Studio"
+"09 — Risks & Decisions","risk","نامشخص بودن Scope بیجک و سطح رهگیری","Mitigation: تصمیم Workshop قبل از طراحی دیتابیس نهایی","High","High","BA","Workflow Studio"
+"09 — Risks & Decisions","risk","ثبت نکردن وضعیت توسط سرپرست‌ها","Mitigation: UX بسیار سریع، ثبت Qty با یک اقدام، مسئولیت روشن و داشبورد Adoption","High","Medium","Production","Workflow Studio"
+"09 — Risks & Decisions","risk","محاسبه اشتباه پارچه به دلیل فرمول‌های متغیر","Mitigation: Formula versioning + manual override with audit","High","Medium","Order/Fabric","Workflow Studio"
+"09 — Risks & Decisions","risk","Planning بیش از حد پیچیده در MVP","Mitigation: MVP فقط visibility؛ V1 ابتدا assisted planning نه optimizer کامل","Medium","High","Product","Workflow Studio"
+"09 — Risks & Decisions","risk","دسترسی Local Network و Backup نامطمئن","Mitigation: Backup schedule، UPS/DB backup و مرورگرهای پشتیبانی‌شده تعریف شود","High","Medium","Tech","Workflow Studio"
+"09 — Risks & Decisions","risk","تعریف نکردن Rework و partial completion","Mitigation: سناریوهای واقعی QC و تولید در Workshop تست شود","High","Medium","QC/Production","Workflow Studio"
